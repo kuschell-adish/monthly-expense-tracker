@@ -1,0 +1,72 @@
+<div class="container-fluid h-100 d-flex justify-content-center align-items-center p-5">
+    <div class="col-12 col-lg-8">
+        <%= link_to root_path do %>
+            <div class="d-flex align-items-center mb-2 px-2" style="font-size: 13px;">
+                <i class="fa-solid fa-chevron-left"></i>
+                <p style="margin-bottom: 0; margin-left: 5px;">Go Back</p>
+            </div>
+        <% end %>
+        
+        <div class="d-flex flex-column w-100 mt-3 p-4" style="background-color: #d9dcd6; font-size: 13px; border-radius: 10px;">
+            <%= form_with model: @expense, local: true do |form| %>
+                <div class="field">
+                    <%= form.label :amount, 
+                        class: 'mb-0' 
+                    %>
+                    <%= form.number_field :amount, 
+                        step: '0.01', min: '0', 
+                        placeholder: 'Enter amount', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+                <div class="field">
+                    <%= form.label :notes, 
+                        class: 'mb-0' 
+                    %>
+                    <%= form.text_field :notes, 
+                        placeholder: 'Enter expense notes', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+                <div class="field">
+                    <%= form.label :category %>
+                    <% Expense::CATEGORIES.each do |category| %>
+                        <div>
+                            <%= form.radio_button :category, 
+                                category, id: "#{category}", 
+                                required: true 
+                            %>
+                            <%= form.label "#{category}" %>
+                        </div>
+                    <% end %>
+                </div>
+
+                <div class="actions d-flex justify-content-between mt-auto">
+                    <%= form.submit 'Create', 
+                        class: 'btn btn-primary mt-2', 
+                        style: 'font-size: 13px;' 
+                    %>
+                    <%= form.submit 'Cancel', 
+                        class: 'btn btn-secondary mt-2', 
+                        style: 'font-size: 13px;', 
+                        id: 'cancel-button' 
+                    %>
+                </div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const cancelButton = document.getElementById('cancel-button'); 
+                        const form = document.querySelector('form');
+                        cancelButton.addEventListener('click', function() {
+                            form.reset();  
+                        });
+                    });
+                </script>
+            <% end %>
+        </div>
+    </div>
+</div>

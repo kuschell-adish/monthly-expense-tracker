@@ -1,0 +1,83 @@
+<div class="container-fluid h-100 d-flex justify-content-center p-5">
+  <div class="col-12 col-lg-8">
+    <div class="d-flex align-items-center justify-content-between px-2">
+      <div class="d-flex">
+        <p style="font-size: 13px; margin-bottom: 0; margin-right: 5px;"><%= "Hello, #{current_user.first_name} #{current_user.last_name}" %> </p>
+      </div>
+      <%= link_to logout_path, method: :delete do %>
+        <div class="d-flex mt-2">
+          <p style="font-size: 13px; margin-top:7px; ">Logout
+          <i class="fa-solid fa-right-from-bracket"></i>
+          </p>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="d-flex justify-content-between w-100">
+      <div class="col-6 p-3" style="background-color: #d9dcd6; border-radius: 18px; margin-right: 5px;">
+        <p class="text-secondary text-uppercase mb-1" style="font-size: 13px;">Remaining:</p>
+        <div class="d-flex align-items-center" style="font-weight: bold;">
+          <h3>PHP</h3>
+          <h3><%= number_to_currency(current_user.budget - @total_expenses, precision: 2, unit: '') %></h3>
+        </div>
+        <%= link_to '<p style="font-size: 12px;">Create New Expense</p>'.html_safe, new_expense_path, class: 'link-tag' %>
+      </div>
+
+      <div class="text-white col-6 p-3" style="background-color: #3a7ca5; border-radius: 18px;">
+      <p class="text-uppercase mb-1" style="font-size: 13px;">Monthly Budget:</p>
+      <div class="d-flex align-items-center" style="font-weight: bold;">
+        <h3>PHP</h3>
+        <h3><%= number_to_currency(current_user.budget, precision: 2, unit: '') %></h3>
+      </div>
+      <%= link_to '<p style="font-size: 12px;">Edit Monthly Budget</p>'.html_safe, edit_budget_path(current_user), class: 'white-tag' %>
+      </div>
+    </div>
+    
+
+    <% if flash[:success] %>
+      <div id="flash-success" class="alert alert-success p-2 mt-2" role="alert" style="font-size: 13px;">
+        <%= flash[:success] %>
+      </div>
+      <script>
+        setTimeout(function() {
+          document.getElementById('flash-success').style.display = 'none';
+        }, 3000);
+      </script>
+    <% end %>
+    
+    <div class="px-4" style="max-height: 450px; overflow-y: auto; margin-right: 10px; margin-top: 16px;">
+      <% @expenses.each do |expense| %>
+        <div class="row align-items-center p-2">
+          <div class="col-12 col-md-5">
+              <div class="d-flex align-items-center">
+                <i class="fa-solid 
+                  <%= case expense.category 
+                    when 'Food' then 'fa-bowl-food'
+                    when 'Leisure' then 'fa-tags'
+                    when 'Travel' then 'fa-compass'
+                  end %>
+                  p-2 rounded h4" style="color: #3a7ca5; margin-right: 5px;"></i>
+              <div class="d-flex flex-column" style="font-size: 13px;">
+                <p class="mb-0 text-capitalize"><%= expense.notes %></p>
+                <p class="text-secondary"><%= expense.category %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <div class="d-flex flex-column" style="font-size: 13px;">
+              <p class="mb-0">+ PHP<%= number_to_currency(expense.amount, precision: 2, unit: '') %></p>
+              <p class="text-secondary"><%= expense.updated_at.strftime('%d %B %Y') %></p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2">
+            <div class="d-flex align-items-center justify-content-end" style="font-size: 13px;">
+              <%= link_to '<button type="button" class="btn btn-primary mb-3" style="font-size: 13px; margin-right: 3px;"><i class="fa-solid fa-pen-to-square"></i></button>'.html_safe, expense_path(expense) %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

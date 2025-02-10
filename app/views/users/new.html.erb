@@ -1,0 +1,77 @@
+<div class="container-fluid h-100 d-flex align-items-center justify-content-center">
+    <div class="col-12 col-md-6 col-lg-4 p-5 rounded">
+        <div class="d-flex flex-column w-100 mt-3 p-4 rounded" style="font-size: 13px; background-color: #d9dcd6;">
+            <h4 class="text-uppercase">Sign Up</h4>
+            <div class="d-flex" style="margin-top: -5px;">
+                <p style="margin-bottom: 20px; font-size: 13px;">Already have an account?
+                    <%= link_to login_path do %>
+                        <p style="margin-bottom: 0; margin-left: 3px;" class="link-tag">Login</p>
+                    <% end %>
+                </p>
+            </div>
+            <%= form_with model: @user, local: true do |form| %>
+                <div class="field">
+                    <%= form.label :first_name, 
+                        class: 'mb-0' 
+                    %>
+                    <%= form.text_field :first_name, 
+                        placeholder: 'Enter first name', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+                <div class="field">
+                    <%= form.label :last_name, 
+                        class: 'mb-0' 
+                    %>
+                    <%= form.text_field :last_name, 
+                        placeholder: 'Enter last name', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+                <div class="field">
+                    <%= form.label :username, 
+                        class: 'mb-0' 
+                    %>
+                    <%= form.text_field :username, 
+                        placeholder: 'Enter username', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+                <div class="field">
+                    <%= form.label :password %>
+                    <%= form.password_field :password, 
+                        placeholder: 'Enter password', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+                <div class="field">
+                    <%= form.label :budget, 
+                        class: 'mb-0' 
+                    %>
+                    <%= form.number_field :budget, 
+                        step: '0.01', min: '0', 
+                        placeholder: 'Enter budget', 
+                        class: 'form-control border-0 mb-3', 
+                        style: 'font-size: 13px;', 
+                        required: true 
+                    %>
+                </div>
+
+                <div class="actions d-flex flex-column">
+                    <%= form.submit 'Sign Up', 
+                        class: 'btn btn-primary my-2', 
+                        style: 'font-size: 13px;' 
+                    %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
